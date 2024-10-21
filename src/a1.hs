@@ -1,4 +1,4 @@
-{- A1 Solutions
+{- A1 Solution
  -
  - Author: Luis Henrique Paoletti, 11929823
  - Date: 21.10.2024
