@@ -11,11 +11,11 @@ type N_value = Nat0
 type K_value = Nat0
 
 
-{- A1 function. -}
+{- Mathematical function as described in A1. -}
 f :: N_value -> K_value -> Nat0
 f n k = (nominator_sum k n) `div` (denominator_sum k)
 
-{- Nominator Sum function for A1 function.
+{- Nominator sum function for f.
  - The sum is from i=0 to (k - 1). The expression is (n - i).
  -}
 nominator_sum :: K_value -> N_value -> Nat0
@@ -26,7 +26,7 @@ nominator_sum' counter n acc
     | counter < 0 = acc
     | otherwise   = nominator_sum' (counter - 1) n (acc + n - counter)
 
-{- Denominator Sum function for A1 function.
+{- Denominator sum function for f.
  - The sum is from i=1 to k. The expression is (i);
  -}
 denominator_sum :: K_value -> Nat0
@@ -37,11 +37,11 @@ denominator_sum' counter acc
     | counter <= 0 = acc
     | otherwise    = denominator_sum' (counter - 1) (acc + counter)
 
-{- A1 Equation Test. -}
+{- Mathematical test as described in A1. -}
 et :: (N_value, K_value) -> Bool
 et (n, k) = et_sum n k == f (n + 1) (k + 1)
 
-{- Sum function for the left side of the Equation Test.
+{- Sum function for the left side of et.
  - The sum is from i=0 to (n - k). The expression is (f (k + i) k).
  -}
 et_sum :: N_value -> K_value -> Nat0

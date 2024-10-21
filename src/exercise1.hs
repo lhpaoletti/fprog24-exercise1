@@ -25,7 +25,9 @@ f' n (x:xs) acc
 -- A3
 type Position = Nat1
 
-{- Determine in which positions of the string the character is present. -}
+{- Determine in which positions of the string the character is present.
+ - The position 1 is at index 0, and so on.
+ -}
 g :: Char -> String -> [Position]
 g c s = reverse $ g' c s 1 []
 
@@ -38,7 +40,7 @@ g' c (x:xs) i ps
 
 -- A4
 {- Determine which numbers in a list are lesser and which are greater than a given number from the list.
- - The resulting lists do not contain duplicates and are both sorted in ascending order.
+ - The resulting lists do not contain duplicates and are both in ascending order.
  - If there's neither a number that's lesser nor greater, both lists are given as empty lists.
  - If the number is not in the list at all, an error is thrown.
  -}
@@ -53,16 +55,18 @@ lesser i xs  = filter (< i) . remDup $ xs
 greater :: Integer -> [Integer] -> [Integer]
 greater i xs = filter (> i) . remDup $ xs
 
-{- Removes duplicates from the given list.
- - The resulting list is sorted ascendingly.
+{- Remove duplicates from the given list.
+ - The resulting list is in ascending order.
  -}
 remDup :: [Integer] -> [Integer]
 remDup xs = sort . remDup' [] . sort $ xs
 
-{- The list of numbers must be sorted ascendingly. -}
+{- The given list of numbers must be sorted in ascending order.
+ - The resulting list is in descending order.
+ -}
 remDup' :: [Integer] -> [Integer] -> [Integer]
 remDup' acc []    = acc
-remDup' [] (x:xs) = remDup' [x] xs  -- If acc empty but xs not, then init
+remDup' [] (x:xs) = remDup' [x] xs  -- init acc
 remDup' acc@(y:_) (x:xs)
     | y == x      = remDup' acc xs
     | otherwise   = remDup' (x:acc) xs  -- y < x
