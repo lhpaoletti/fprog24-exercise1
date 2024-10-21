@@ -11,7 +11,7 @@ type K_value = Nat0
 
 {- A1 function. -}
 f :: N_value -> K_value -> Nat0
-f n k = (nominator_sum k n) / (denominator_sum k)
+f n k = (nominator_sum k n) `div` (denominator_sum k)
 
 {- Nominator Sum function for A1 function.
  - The sum is from i=0 to (k - 1). The expression is (n - i).
