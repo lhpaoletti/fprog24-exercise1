@@ -7,6 +7,8 @@ module Exercise1 where
 import qualified A1  -- qualified because of the f function
 import Types
 
+import Data.List
+
 
 -- A2
 {- Count the amount of times a number appears in a list. -}
@@ -32,3 +34,35 @@ g' _ [] _ ps = ps
 g' c (x:xs) i ps
     | c == x    = g' c xs (i + 1) (i:ps)
     | otherwise = g' c xs (i + 1) ps
+
+
+-- A4
+{- Determine which numbers in a list are lesser and which are greater than a given number from the list.
+ - The resulting lists do not contain duplicates and are both sorted in ascending order.
+ - If there's neither a number that's lesser nor greater, both lists are given as empty lists.
+ - If the number is not in the list at all, an error is thrown.
+ -}
+h :: Integer -> [Integer] -> ([Integer], [Integer])
+h i xs = if i `elem` xs
+         then (lesser i xs, greater i xs)
+         else error "Number must be an element of the given list"
+
+lesser :: Integer -> [Integer] -> [Integer]
+lesser i xs  = filter (< i) . remDup $ xs
+
+greater :: Integer -> [Integer] -> [Integer]
+greater i xs = filter (> i) . remDup $ xs
+
+{- Removes duplicates from the given list.
+ - The resulting list is sorted ascendingly.
+ -}
+remDup :: [Integer] -> [Integer]
+remDup xs = sort . remDup' [] . sort $ xs
+
+{- The list of numbers must be sorted ascendingly. -}
+remDup' :: [Integer] -> [Integer] -> [Integer]
+remDup' acc []    = acc
+remDup' [] (x:xs) = remDup' [x] xs  -- If acc empty but xs not, then init
+remDup' acc@(y:_) (x:xs)
+    | y == x      = remDup' acc xs
+    | otherwise   = remDup' (x:acc) xs  -- y < x
