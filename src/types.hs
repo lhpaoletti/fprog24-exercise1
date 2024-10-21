@@ -6,3 +6,4 @@
 module Types where
 
 type Nat0 = Int
+type Nat1 = Int
