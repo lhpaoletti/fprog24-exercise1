@@ -14,32 +14,32 @@ type K_value = Nat0
 {- Mathematical function as described in A1. -}
 f :: N_value -> K_value -> Nat0
 f n k =
-    let result = (nominator_sum k n) `div` (denominator_sum k)
+    let result = (nominator_prod k n) `div` (denominator_prod k)
     in if result < 0
        then error "Illegal arguments"
        else result
 
-{- Nominator sum function for f.
- - The sum is from i=0 to (k - 1). The expression is (n - i).
+{- Nominator product function for f.
+ - The product is from i=0 to (k - 1). The expression is (n - i).
  -}
-nominator_sum :: K_value -> N_value -> Int
-nominator_sum k n = nominator_sum' (k - 1) n 0
+nominator_prod :: K_value -> N_value -> Int
+nominator_prod k n = nominator_prod' (k - 1) n 1
 
-nominator_sum' :: Nat0 -> N_value -> Int -> Int
-nominator_sum' counter n acc
+nominator_prod' :: Nat0 -> N_value -> Int -> Int
+nominator_prod' counter n acc
     | counter < 0 = acc
-    | otherwise   = nominator_sum' (counter - 1) n (acc + n - counter)
+    | otherwise   = nominator_prod' (counter - 1) n (acc * (n - counter))
 
-{- Denominator sum function for f.
- - The sum is from i=1 to k. The expression is (i);
+{- Denominator product function for f.
+ - The product is from i=1 to k. The expression is (i);
  -}
-denominator_sum :: K_value -> Int
-denominator_sum k = denominator_sum' k 0
+denominator_prod :: K_value -> Int
+denominator_prod k = denominator_prod' k 1
 
-denominator_sum' :: Nat0 -> Int -> Int
-denominator_sum' counter acc
+denominator_prod' :: Nat0 -> Int -> Int
+denominator_prod' counter acc
     | counter <= 0 = acc
-    | otherwise    = denominator_sum' (counter - 1) (acc + counter)
+    | otherwise    = denominator_prod' (counter - 1) (acc * counter)
 
 {- Mathematical test as described in A1. -}
 et :: (N_value, K_value) -> Bool
