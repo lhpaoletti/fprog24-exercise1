@@ -13,7 +13,7 @@ type K_value = Nat0
 
 {- Mathematical function as described in A1. -}
 f :: N_value -> K_value -> Nat0
-f n k = (nominator_prod k n) `div` (fac k)
+f n k = div (nominator_prod k n) . product $ [1..k]
 
 {- Nominator product function for f.
  - The product is from i=0 to (k - 1). The expression is (n - i).
@@ -25,10 +25,6 @@ nominator_prod' :: Nat0 -> N_value -> Int -> Int
 nominator_prod' counter n acc
     | counter < 0 = acc
     | otherwise   = nominator_prod' (counter - 1) n (acc * (n - counter))
-
-{- Factorial function. -}
-fac :: Int -> Int
-fac = product . enumFromTo 1
 
 {- Mathematical test as described in A1. -}
 et :: (N_value, K_value) -> Bool
