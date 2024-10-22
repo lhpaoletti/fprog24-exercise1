@@ -13,11 +13,7 @@ type K_value = Nat0
 
 {- Mathematical function as described in A1. -}
 f :: N_value -> K_value -> Nat0
-f n k =
-    let result = (nominator_prod k n) `div` (fac k)
-    in if result < 0
-       then error "Illegal arguments"
-       else result
+f n k = (nominator_prod k n) `div` (fac k)
 
 {- Nominator product function for f.
  - The product is from i=0 to (k - 1). The expression is (n - i).
