@@ -13,18 +13,12 @@ type K_value = Nat0
 
 {- Mathematical function as described in A1. -}
 f :: N_value -> K_value -> Nat0
-f n k = div (nominator_prod k n) . product $ [1..k]
-
-{- Nominator product function for f.
- - The product is from i=0 to (k - 1). The expression is (n - i).
- -}
-nominator_prod :: K_value -> N_value -> Int
-nominator_prod k n = nominator_prod' (k - 1) n 1
-
-nominator_prod' :: Nat0 -> N_value -> Int -> Int
-nominator_prod' counter n acc
-    | counter < 0 = acc
-    | otherwise   = nominator_prod' (counter - 1) n (acc * (n - counter))
+f n k =
+    let valid     = n >= 0 && k >= 0
+        nominator = product [n - j | j <- [0..(k - 1)]]  -- product of (n - j), where j is in [0, k - 1]
+    in if valid
+       then div nominator . product $ [1..k]             -- nominator / k!
+       else error "n and k must be Nat0"
 
 {- Mathematical test as described in A1. -}
 et :: (N_value, K_value) -> Bool
