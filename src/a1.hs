@@ -22,19 +22,9 @@ f n k =
 
 {- Mathematical test as described in A1. -}
 et :: (N_value, K_value) -> Bool
-et (n, k) = et_sum n k == f (n + 1) (k + 1)
-
-{- Sum function for the left side of et.
- - The sum is from i=0 to (n - k). The expression is (f (k + i) k).
- -}
-et_sum :: N_value -> K_value -> Nat0
-et_sum n k =
-    let result = et_sum' (n - k) k 0
-    in if result < 0
-       then error "Illegal arguments"
-       else result
-
-et_sum' :: Nat0 -> K_value -> Int -> Int
-et_sum' counter k acc
-    | counter < 0 = acc
-    | otherwise   = et_sum' (counter - 1) k (acc + f (k + counter) k)
+et (n, k) =
+    let valid     = n >= 0 && k >= 0
+        left_side = sum [f x k | x <- [k + i | i <- [0..(n - k)]]]  -- sum of (f k+i k), where i is in [0, n - k]
+    in if valid
+       then left_side == f (n + 1) (k + 1)
+       else error "n and k must be Nat0"
