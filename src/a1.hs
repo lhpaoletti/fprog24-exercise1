@@ -14,7 +14,7 @@ type K_value = Nat0
 {- Mathematical function as described in A1. -}
 f :: N_value -> K_value -> Nat0
 f n k =
-    let result = (nominator_prod k n) `div` (denominator_prod k)
+    let result = (nominator_prod k n) `div` (fac k)
     in if result < 0
        then error "Illegal arguments"
        else result
@@ -30,16 +30,9 @@ nominator_prod' counter n acc
     | counter < 0 = acc
     | otherwise   = nominator_prod' (counter - 1) n (acc * (n - counter))
 
-{- Denominator product function for f.
- - The product is from i=1 to k. The expression is (i);
- -}
-denominator_prod :: K_value -> Int
-denominator_prod k = denominator_prod' k 1
-
-denominator_prod' :: Nat0 -> Int -> Int
-denominator_prod' counter acc
-    | counter <= 0 = acc
-    | otherwise    = denominator_prod' (counter - 1) (acc * counter)
+{- Factorial function. -}
+fac :: Int -> Int
+fac = product . enumFromTo 1
 
 {- Mathematical test as described in A1. -}
 et :: (N_value, K_value) -> Bool
