@@ -23,13 +23,7 @@ type Position = Nat1
  - The position 1 is at index 0, and so on.
  -}
 g :: Char -> String -> [Position]
-g c s = reverse $ g' c s 1 []
-
-g' :: Char -> String -> Nat1 -> [Position] -> [Position]
-g' _ [] _ ps = ps
-g' c (x:xs) i ps
-    | c == x    = g' c xs (i + 1) (i:ps)
-    | otherwise = g' c xs (i + 1) ps
+g c s = [i | (i, c') <- zip [1..] s, c == c']
 
 
 -- A4
