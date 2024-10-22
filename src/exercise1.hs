@@ -43,18 +43,7 @@ lesser i xs  = filter (< i) . remDup $ xs
 greater :: Integer -> [Integer] -> [Integer]
 greater i xs = filter (> i) . remDup $ xs
 
-{- Remove duplicates from the given list.
- - The resulting list is in ascending order.
- -}
+{- Remove duplicates from the given list. -}
 remDup :: [Integer] -> [Integer]
-remDup xs = sort . remDup' [] . sort $ xs
-
-{- The given list of numbers must be sorted in ascending order.
- - The resulting list is in descending order.
- -}
-remDup' :: [Integer] -> [Integer] -> [Integer]
-remDup' acc []    = acc
-remDup' [] (x:xs) = remDup' [x] xs  -- init acc
-remDup' acc@(y:_) (x:xs)
-    | y == x      = remDup' acc xs
-    | otherwise   = remDup' (x:acc) xs  -- y < x
+remDup []     = []
+remDup (x:xs) = x:(remDup . filter (/= x) $ xs)
