@@ -38,10 +38,10 @@ h i xs = if i `elem` xs
          else error "Number must be an element of the given list"
 
 lesser :: Integer -> [Integer] -> [Integer]
-lesser i xs  = filter (< i) . remDup $ xs
+lesser i  = filter (< i) . remDup
 
 greater :: Integer -> [Integer] -> [Integer]
-greater i xs = filter (> i) . remDup $ xs
+greater i = filter (> i) . remDup
 
 {- Remove duplicates from the given list. -}
 remDup :: [Integer] -> [Integer]
